@@ -1,0 +1,28 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:browser="http://namespaces.zope.org/browser"
+  i18n_domain="jarn.xmpp.collaboration">
+
+  <browser:view
+    for="*"
+    name="collaborate"
+    class=".collaborate.CollaborateView"
+    permission="cmf.ModifyPortalContent"
+    />
+
+  <browser:resourceDirectory
+    name="jarn.xmpp.collaboration.js"
+    directory="js"
+    />
+
+  <browser:resourceDirectory
+    name="jarn.xmpp.collaboration.images"
+    directory="images"
+    />
+
+  <browser:resourceDirectory
+    name="jarn.xmpp.collaboration.css"
+    directory="css"
+    />
+
+</configure>

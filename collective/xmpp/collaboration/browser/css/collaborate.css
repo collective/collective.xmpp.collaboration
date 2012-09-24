@@ -1,0 +1,11 @@
+.node-participant {
+	height: 20px;
+	width: 15px;
+	padding: 5px;
+	float: left;
+}
+
+.node-participants {
+	height: 25px;
+	padding: 5px;
+}

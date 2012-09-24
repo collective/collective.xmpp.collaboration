@@ -18,8 +18,9 @@ from jarn.xmpp.twisted.component import XMPPComponent
 
 from collective.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
 from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
-from collective.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
+from collective.xmpp.collaboration.interfaces import IProductLayer
 from collective.xmpp.collaboration.protocol import DSCException
+from collective.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
 
 log= logging.getLogger(__name__)
 
@@ -111,6 +112,10 @@ class CollaborationHandler(DifferentialSyncronisationHandler):
 
 
 def setupCollaborationComponent(portal, event):
+    request = getattr(portal, 'REQUEST', None)
+    if not request or not IProductLayer.providedBy(request):
+        return
+
     if queryUtility(ICollaborativeEditingComponent) is None:
         gsm = getGlobalSiteManager()
         registry = getUtility(IRegistry)

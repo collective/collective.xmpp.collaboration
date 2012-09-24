@@ -21,7 +21,7 @@ from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
 from collective.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
 from collective.xmpp.collaboration.protocol import DSCException
 
-logger= logging.getLogger('collective.xmpp.collaboration')
+log= logging.getLogger(__name__)
 
 
 class CollaborationHandler(DifferentialSyncronisationHandler):
@@ -33,10 +33,10 @@ class CollaborationHandler(DifferentialSyncronisationHandler):
         self.portal_id = portal.id
 
     def userJoined(self, user, node):
-        logger.info('User %s joined node %s.' % (user, node))
+        log.info('User %s joined node %s.' % (user, node))
 
     def userLeft(self, user, node):
-        logger.info('User %s left node %s.' % (user, node))
+        log.info('User %s left node %s.' % (user, node))
 
     def getNodeText(self, jid, node):
         transaction.begin()
@@ -119,7 +119,7 @@ def setupCollaborationComponent(portal, event):
         password = registry.get('collective.xmpp.collaborationPassword')
         port = registry.get('collective.xmpp.collaborationPort')
         if component_jid is None or xmpp_domain is None or password is None or port is None:
-            logger.error('Could not connect the Collaboration component, check your registry settings')
+            log.warn('Could not connect the Collaboration component, check your registry settings')
             return
 
         component = XMPPComponent(xmpp_domain, port,

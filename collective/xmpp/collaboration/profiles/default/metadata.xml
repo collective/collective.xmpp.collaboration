@@ -2,6 +2,6 @@
 <metadata>
   <version>1</version>
   <dependencies>
-    <dependency>profile-jarn.xmpp.core:default</dependency>
+    <dependency>profile-collective.xmpp.core:default</dependency>
   </dependencies>
 </metadata>

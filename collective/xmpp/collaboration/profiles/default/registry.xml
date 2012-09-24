@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <registry>
 
-  <record name="jarn.xmpp.collaborationJID">
+  <record name="collective.xmpp.collaborationJID">
     <field type="plone.registry.field.ASCIILine">
       <title>Collaboration component JID</title>
     </field>
     <value>collaboration.localhost</value>
   </record>
 
-  <record name="jarn.xmpp.collaborationPassword">
+  <record name="collective.xmpp.collaborationPassword">
     <field type="plone.registry.field.Password">
       <title>Component password</title>
     </field>
     <value>secret</value>
   </record>
 
-  <record name="jarn.xmpp.collaborationPort">
+  <record name="collective.xmpp.collaborationPort">
     <field type="plone.registry.field.Int">
       <title>XMPP Server component port</title>
     </field>

@@ -1,8 +1,8 @@
-jarn.xmpp.collaboration Installation
+collective.xmpp.collaboration Installation
 =======================
 
  * When you're reading this you have probably already run
-   ``easy_install jarn.xmpp.collaboration``. Find out how to install setuptools
+   ``easy_install collective.xmpp.collaboration``. Find out how to install setuptools
    (and EasyInstall) here:
    http://peak.telecommunity.com/DevCenter/EasyInstall
 
@@ -12,24 +12,24 @@ jarn.xmpp.collaboration Installation
 
    into your Zope instance.
 
- * Create a file called ``jarn.xmpp.collaboration-configure.zcml`` in the
+ * Create a file called ``collective.xmpp.collaboration-configure.zcml`` in the
    ``/path/to/instance/etc/package-includes`` directory.  The file
    should only contain this::
 
-       <include package="jarn.xmpp.collaboration" />
+       <include package="collective.xmpp.collaboration" />
 
 .. _pythonproducts: http://plone.org/products/pythonproducts
 
 Alternatively, if you are using zc.buildout and the plone.recipe.zope2instance
 recipe to manage your project, you can do this:
 
- * Add ``jarn.xmpp.collaboration`` to the list of eggs to install, e.g.:
+ * Add ``collective.xmpp.collaboration`` to the list of eggs to install, e.g.:
 
     [buildout]
     ...
     eggs =
         ...
-        jarn.xmpp.collaboration
+        collective.xmpp.collaboration
 
   * Tell the plone.recipe.zope2instance recipe to install a ZCML slug:
 
@@ -37,7 +37,7 @@ recipe to manage your project, you can do this:
     recipe = plone.recipe.zope2instance
     ...
     zcml =
-        jarn.xmpp.collaboration
+        collective.xmpp.collaboration
 
   * Re-run buildout, e.g. with:
 

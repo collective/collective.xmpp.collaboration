@@ -1,7 +1,10 @@
 Introduction
 ============
 
-``jarn.xmpp.collaboration`` defines a protocol to do real-time collaborative editing through XMPP and provides:
+.. note: This is a fork of jarn.xmpp.collaboration. More details will soon
+   follow.
+
+``collective.xmpp.collaboration`` defines a protocol to do real-time collaborative editing through XMPP and provides:
 
 * a generic overridable implementation of the server component.
 * a Plone-specific implementation (server component and javascript client).
@@ -10,11 +13,11 @@ Introduction
 It is part of a suite of packages aiming to provide XMPP services to Plone. The other two packages are
 
 * `jarn.xmpp.twisted`_, provides XMPP-specific protocol implementation for twisted.
-* `jarn.xmpp.core`_ provides facilities for presence, messaging, chatting and microblogging.
+* `collective.xmpp.core`_
 
 Requirements
 ============
-Please see ``jarn.xmpp.core`` for details on setting up your Plone site and XMPP server. If you are not using the recipe included in `jarn.xmpp.buildout` you will need to configure your ejabberd to allow connections from the collaboration component. For ``ejabberd`` this is done by including the following in your config file::
+Please see ``collective.xmpp.core`` for details on setting up your Plone site and XMPP server. If you are not using the recipe included in `jarn.xmpp.buildout` you will need to configure your ejabberd to allow connections from the collaboration component. For ``ejabberd`` this is done by including the following in your config file::
 
     {{5347, {0,0,0,0} }, ejabberd_service, [
       {access, all},
@@ -25,27 +28,26 @@ Please see ``jarn.xmpp.core`` for details on setting up your Plone site and XMPP
       }
      ]},
 
-
 The instance that is going to be running the xmpp component should include the ``component.zcml``. You can do this in your buildout::
 
     zcml-additional =
       <configure xmlns="http://namespaces.zope.org/zope">
           <include package="jarn.xmpp.twisted" file="reactor.zcml" />
-          <include package="jarn.xmpp.collaboration" file="component.zcml" />
+          <include package="collective.xmpp.collaboration" file="component.zcml" />
       </configure>
 
 Finally you will need to "activate" the product in the Plone control panel. After doing so, please edit the registry settings and in particular:
 
-* ``jarn.xmpp.collaborationJID`` is the Jabber id of the collaborative editing service component. Essentially if ``myserver`` is your XMPP domain ``collaboration.myserver`` is a good name. This should match the name you gave to ``ejabberd``, see above. Default is ``collaboration.localhost``.
+* ``collective.xmpp.collaborationJID`` is the Jabber id of the collaborative editing service component. Essentially if ``myserver`` is your XMPP domain ``collaboration.myserver`` is a good name. This should match the name you gave to ``ejabberd``, see above. Default is ``collaboration.localhost``.
 
-* ``jarn.xmpp.collaborationPassword`` is the password the component will use to connect to your xmpp server, see above. Default is ``secret``.
+* ``collective.xmpp.collaborationPassword`` is the password the component will use to connect to your xmpp server, see above. Default is ``secret``.
 
-* ``jarn.xmpp.collaborationPort`` is the port that your XMPP server allows components to connect to, see above. Default is ``5347``.
+* ``collective.xmpp.collaborationPort`` is the port that your XMPP server allows components to connect to, see above. Default is ``5347``.
 
 Usage
 =====
 
-Using ``jarn.xmpp.collaboration`` is easy once you have gotten over setting it up. There are no special views to use when you collaboratively edit content. If an adapter to *ICollaborativelyEditable* exists for your content then accessing its edit form will allow multiple users to edit simultaneously.
+Using ``collective.xmpp.collaboration`` is easy once you have gotten over setting it up. There are no special views to use when you collaboratively edit content. If an adapter to *ICollaborativelyEditable* exists for your content then accessing its edit form will allow multiple users to edit simultaneously.
 
 Out of the box there exist adapters for archetypes as well as dexterity-based content types. For AT content types, fields that implement ``IStringField`` or ``ITextField`` will automatically get collaborative editing support. For Dexterity the fields that will be automatically included are those that provide ``ITextLine``, ``IText`` or ``IRichText`` regardless of the *behavior* by which they are defined. Note that the javascript client assumes that TinyMCE is used. Collaboration on rich text fields will not work with Kupu.
 
@@ -179,13 +181,15 @@ Upon receipt, the server notifies any party that might still be editing the node
 Credits
 =======
 
+* The original package jarn.xmpp.collaborate (of which this is a fork) was
+written by Yiorgis Gozadinos (@ggozad)
 * Most of this work was done using the 10% time available to `Jarn AS`_ employees for the development of open-source projects.
 * David Glick (davisagli) for dexterity support and general awesomeness.
-* ``jarn.xmpp.collaboration`` relies on the wonderful `Diff-Match-Patch`_ from Neil Fraser at Google. It is distributed under the Apache License 2.0.
+* ``collective.xmpp.collaboration`` relies on the wonderful `Diff-Match-Patch`_ from Neil Fraser at Google. It is distributed under the Apache License 2.0.
 
 .. _Diff-Match-Patch: http://code.google.com/p/google-diff-match-patch
 .. _Jarn AS: http://jarn.com
 .. _jarn.xmpp.twisted: http://pypi.python.org/pypi/jarn.xmpp.twisted
-.. _jarn.xmpp.core: http://pypi.python.org/pypi/jarn.xmpp.core
+.. _collective.xmpp.core: http://pypi.python.org/pypi/collective.xmpp.core
 
 

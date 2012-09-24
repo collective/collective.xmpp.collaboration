@@ -2,8 +2,8 @@ from twisted.trial import unittest
 from wokkel.generic import parseXml
 from wokkel.test.helpers import XmlStreamStub
 
-from jarn.xmpp.collaboration.tests import mock
-from jarn.xmpp.collaboration.dmp import diff_match_patch
+from collective.xmpp.collaboration.tests import mock
+from collective.xmpp.collaboration.dmp import diff_match_patch
 
 
 class DifferentialSyncronisationHandlerFunctionalTest(unittest.TestCase):

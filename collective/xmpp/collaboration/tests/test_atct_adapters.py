@@ -5,8 +5,8 @@ from zope.component import queryAdapter
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 
-from jarn.xmpp.collaboration.interfaces import ICollaborativelyEditable
-from jarn.xmpp.collaboration.testing import COLLABORATION_INTEGRATION_TESTING
+from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
+from collective.xmpp.collaboration.testing import COLLABORATION_INTEGRATION_TESTING
 
 
 class ATCTCEAdapterTest(unittest.TestCase):

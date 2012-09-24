@@ -2,7 +2,7 @@ from plone.locking.interfaces import ILockSettings
 from zope.component import adapts
 from zope.interface import implements
 
-from jarn.xmpp.collaboration.interfaces import INonLockable
+from collective.xmpp.collaboration.interfaces import INonLockable
 
 
 class CollaborativelyEditableLocking(object):

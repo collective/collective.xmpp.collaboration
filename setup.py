@@ -3,7 +3,7 @@ import os
 
 version = '0.1b3'
 
-setup(name='jarn.xmpp.collaboration',
+setup(name='collective.xmpp.collaboration',
       version=version,
       description="Collaborative editing for Plone",
       long_description=open("README.rst").read() + "\n" +
@@ -17,16 +17,16 @@ setup(name='jarn.xmpp.collaboration',
         ],
       keywords='',
       author='Yiorgis Gozadinos',
-      author_email='ggozad@jarn.com',
-      url='https://github.com/ggozad/jarn.xmpp.collaboration',
+      author_email='ggozad@crypho.com',
+      url='https://github.com/collective/collective.xmpp.collaboration',
       license='GPL',
       packages=find_packages(),
-      namespace_packages=['jarn', 'jarn.xmpp'],
+      namespace_packages=['collective', 'collective.xmpp.],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'jarn.xmpp.core'
+          'collective.xmpp.core'
       ],
       extras_require = {
           'test': [

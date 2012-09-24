@@ -7,7 +7,7 @@ from zope.configuration import xmlconfig
 from zope.component import getUtility
 
 
-from jarn.xmpp.core.testing import XMPPCORE_NO_REACTOR_FIXTURE
+from collective.xmpp.core.testing import XMPPCORE_NO_REACTOR_FIXTURE
 
 try:
     import plone.app.dexterity
@@ -26,14 +26,14 @@ class CollaborationFixture(PloneSandboxLayer):
             self.loadZCML(name='meta.zcml', package=plone.app.dexterity)
             self.loadZCML(package=plone.app.dexterity)
 
-        import jarn.xmpp.collaboration
-        xmlconfig.file('configure.zcml', jarn.xmpp.collaboration,
+        import collective.xmpp.collaboration
+        xmlconfig.file('configure.zcml', collective.xmpp.collaboration,
                        context=configurationContext)
 
     def setUpPloneSite(self, portal):
-        applyProfile(portal, 'jarn.xmpp.collaboration:default')
+        applyProfile(portal, 'collective.xmpp.collaboration:default')
         registry = getUtility(IRegistry)
-        registry['jarn.xmpp.collaborationJID'] = 'collaboration.localhost'
+        registry['collective.xmpp.collaborationJID'] = 'collaboration.localhost'
 
         if HAS_DEXTERITY:
             self.applyProfile(portal, 'plone.app.dexterity:default')
@@ -79,7 +79,7 @@ class CollaborationFixture(PloneSandboxLayer):
             portal.portal_types.mytype.behaviors = (
                 'plone.app.dexterity.behaviors.metadata.IDublinCore',
                 'plone.app.content.interfaces.INameFromTitle',
-                'jarn.xmpp.collaboration.interfaces.ICollaborativelyEditable')
+                'collective.xmpp.collaboration.interfaces.ICollaborativelyEditable')
             setRoles(portal, TEST_USER_ID, ['Member'])
 
 

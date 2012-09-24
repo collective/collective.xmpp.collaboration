@@ -5,8 +5,8 @@ from zope.cachedescriptors.property import Lazy as lazy_property
 from zope.component import adapts
 from zope.interface import implements
 
-from jarn.xmpp.collaboration.interfaces import ICollaborativelyEditable
-from jarn.xmpp.collaboration.adapters.base import CEAdapterBase
+from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
+from collective.xmpp.collaboration.adapters.base import CEAdapterBase
 
 
 class ATContentTypesCEAdapter(CEAdapterBase):

@@ -9,8 +9,8 @@ from plone.dexterity.interfaces import IDexterityContent
 from plone.dexterity.utils import iterSchemata
 from plone.app.textfield.interfaces import IRichText, IRichTextValue
 
-from jarn.xmpp.collaboration.adapters.base import CEAdapterBase
-from jarn.xmpp.collaboration.interfaces import ICollaborativelyEditable
+from collective.xmpp.collaboration.adapters.base import CEAdapterBase
+from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
 
 
 class DexterityCEAdapter(CEAdapterBase):

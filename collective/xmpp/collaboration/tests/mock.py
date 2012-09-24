@@ -1,4 +1,4 @@
-from jarn.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
+from collective.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
 
 
 class MockDifferentialSyncronisationHandler(DifferentialSyncronisationHandler):

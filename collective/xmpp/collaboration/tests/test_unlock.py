@@ -4,7 +4,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.locking.interfaces import ILockable
 
-from jarn.xmpp.collaboration.testing import COLLABORATION_INTEGRATION_TESTING
+from collective.xmpp.collaboration.testing import COLLABORATION_INTEGRATION_TESTING
 
 
 class UnlockAdapterTest(unittest.TestCase):

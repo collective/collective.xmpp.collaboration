@@ -8,7 +8,7 @@ from wokkel import disco, iwokkel
 from wokkel.generic import parseXml
 from wokkel.test.helpers import XmlStreamStub
 
-from jarn.xmpp.collaboration.tests import mock
+from collective.xmpp.collaboration.tests import mock
 
 
 class DifferentialSyncronisationHandlerTest(unittest.TestCase):

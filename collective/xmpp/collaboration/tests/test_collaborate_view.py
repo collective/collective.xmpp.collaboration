@@ -5,9 +5,9 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from zope.component import getGlobalSiteManager
 
-from jarn.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
-from jarn.xmpp.collaboration.testing import COLLABORATION_INTEGRATION_TESTING
-from jarn.xmpp.collaboration.tests.mock import MockCollaborationComponent
+from collective.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
+from collective.xmpp.collaboration.testing import COLLABORATION_INTEGRATION_TESTING
+from collective.xmpp.collaboration.tests.mock import MockCollaborationComponent
 
 
 class CollaborateViewTest(unittest.TestCase):

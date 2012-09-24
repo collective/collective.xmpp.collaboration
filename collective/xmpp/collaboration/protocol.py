@@ -8,8 +8,8 @@ from zope.interface import implements
 from wokkel import disco, iwokkel
 from wokkel.subprotocols import XMPPHandler
 
-from jarn.xmpp.collaboration.interfaces import IDifferentialSyncronisation
-from jarn.xmpp.collaboration.dmp import diff_match_patch
+from collective.xmpp.collaboration.interfaces import IDifferentialSyncronisation
+from collective.xmpp.collaboration.dmp import diff_match_patch
 
 NS_CE = 'http://jarn.com/ns/collaborative-editing'
 IQ_GET = '/iq[@type="get"]'
@@ -17,7 +17,7 @@ IQ_SET = '/iq[@type="set"]'
 CE_PRESENCE = "/presence"
 CE_MESSAGE = "/message/x[@xmlns='%s']" % NS_CE
 
-logger = logging.getLogger('jarn.xmpp.collaboration')
+logger = logging.getLogger('collective.xmpp.collaboration')
 
 
 class DSCException(Exception):

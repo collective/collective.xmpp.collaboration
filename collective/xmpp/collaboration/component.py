@@ -12,16 +12,16 @@ from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 from zope.component import queryUtility
 
-from jarn.xmpp.core.utils.users import unescapeNode
+from collective.xmpp.core.utils.users import unescapeNode
 
 from jarn.xmpp.twisted.component import XMPPComponent
 
-from jarn.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
-from jarn.xmpp.collaboration.interfaces import ICollaborativelyEditable
-from jarn.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
-from jarn.xmpp.collaboration.protocol import DSCException
+from collective.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
+from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
+from collective.xmpp.collaboration.protocol import DifferentialSyncronisationHandler
+from collective.xmpp.collaboration.protocol import DSCException
 
-logger= logging.getLogger('jarn.xmpp.collaboration')
+logger= logging.getLogger('collective.xmpp.collaboration')
 
 
 class CollaborationHandler(DifferentialSyncronisationHandler):
@@ -114,10 +114,10 @@ def setupCollaborationComponent(portal, event):
     if queryUtility(ICollaborativeEditingComponent) is None:
         gsm = getGlobalSiteManager()
         registry = getUtility(IRegistry)
-        component_jid = registry.get('jarn.xmpp.collaborationJID')
-        xmpp_domain = registry.get('jarn.xmpp.xmppDomain')
-        password = registry.get('jarn.xmpp.collaborationPassword')
-        port = registry.get('jarn.xmpp.collaborationPort')
+        component_jid = registry.get('collective.xmpp.collaborationJID')
+        xmpp_domain = registry.get('collective.xmpp.xmppDomain')
+        password = registry.get('collective.xmpp.collaborationPassword')
+        port = registry.get('collective.xmpp.collaborationPort')
         if component_jid is None or xmpp_domain is None or password is None or port is None:
             logger.error('Could not connect the Collaboration component, check your registry settings')
             return

@@ -177,8 +177,7 @@ Upon receipt, the server notifies any party that might still be editing the node
 Credits
 =======
 
-* The original package jarn.xmpp.collaborate (of which this is a fork) was
-written by Yiorgis Gozadinos (@ggozad) while working at `Jarn AS`_.
+* The original package jarn.xmpp.collaborate (of which this is a fork) was written by Yiorgis Gozadinos (@ggozad) while working at `Jarn AS`_.
 * David Glick (davisagli) for dexterity support and general awesomeness.
 * ``collective.xmpp.collaboration`` relies on the wonderful `Diff-Match-Patch`_ from Neil Fraser at Google. It is distributed under the Apache License 2.0.
 

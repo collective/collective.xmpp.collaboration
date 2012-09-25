@@ -28,7 +28,7 @@ The instance that is going to be running the xmpp component should include the `
 
     zcml-additional =
       <configure xmlns="http://namespaces.zope.org/zope">
-          <include package="jarn.xmpp.twisted" file="reactor.zcml" />
+          <include package="collective.xmpp.core" file="reactor.zcml" />
           <include package="collective.xmpp.collaboration" file="component.zcml" />
       </configure>
 
@@ -186,6 +186,3 @@ Credits
 .. _jarn.xmpp.core: http://github.com/ggozad/jarn.xmpp.core
 .. _Diff-Match-Patch: http://code.google.com/p/google-diff-match-patch
 .. _Jarn AS: http://jarn.com
-.. _jarn.xmpp.twisted: http://pypi.python.org/pypi/jarn.xmpp.twisted
-
-

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1b3'
+version = '0.1-dev'
 
 setup(name='collective.xmpp.collaboration',
       version=version,

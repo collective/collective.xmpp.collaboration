@@ -1,8 +1,9 @@
 Introduction
 ============
 
-.. note: This is a fork of jarn.xmpp.collaboration. More details will soon
-   follow.
+``collective.xmpp.collaboration`` is a fork of `jarn.xmpp.collaboration`_ by
+Yiorgis Gozadinos (@gozad). The major change is that this package now depends
+on `collective.xmpp.core`_ and not on `jarn.xmpp.core`_.
 
 ``collective.xmpp.collaboration`` defines a protocol to do real-time collaborative editing through XMPP and provides:
 
@@ -10,14 +11,9 @@ Introduction
 * a Plone-specific implementation (server component and javascript client).
 * adapters for basic Plone content types (Pages and News Items).
 
-It is part of a suite of packages aiming to provide XMPP services to Plone. The other two packages are
-
-* `jarn.xmpp.twisted`_, provides XMPP-specific protocol implementation for twisted.
-* `collective.xmpp.core`_
-
 Requirements
 ============
-Please see ``collective.xmpp.core`` for details on setting up your Plone site and XMPP server. If you are not using the recipe included in `jarn.xmpp.buildout` you will need to configure your ejabberd to allow connections from the collaboration component. For ``ejabberd`` this is done by including the following in your config file::
+Please see ``collective.xmpp.core`` for details on setting up your Plone site and XMPP server. You will need to configure your ejabberd to allow connections from the collaboration component. For ``ejabberd`` this is done by including the following in your config file::
 
     {{5347, {0,0,0,0} }, ejabberd_service, [
       {access, all},
@@ -182,14 +178,15 @@ Credits
 =======
 
 * The original package jarn.xmpp.collaborate (of which this is a fork) was
-written by Yiorgis Gozadinos (@ggozad)
-* Most of this work was done using the 10% time available to `Jarn AS`_ employees for the development of open-source projects.
+written by Yiorgis Gozadinos (@ggozad) while working at `Jarn AS`_.
 * David Glick (davisagli) for dexterity support and general awesomeness.
 * ``collective.xmpp.collaboration`` relies on the wonderful `Diff-Match-Patch`_ from Neil Fraser at Google. It is distributed under the Apache License 2.0.
 
+.. _jarn.xmpp.collaboration: http://github.com/ggozad/jarn.xmpp.collaboration
+.. _collective.xmpp.core: http://github.com/collective/collective.xmpp.core
+.. _jarn.xmpp.core: http://github.com/ggozad/jarn.xmpp.core
 .. _Diff-Match-Patch: http://code.google.com/p/google-diff-match-patch
 .. _Jarn AS: http://jarn.com
 .. _jarn.xmpp.twisted: http://pypi.python.org/pypi/jarn.xmpp.twisted
-.. _collective.xmpp.core: http://pypi.python.org/pypi/collective.xmpp.core
 
 

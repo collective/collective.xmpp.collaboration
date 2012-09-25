@@ -14,7 +14,7 @@ from zope.component import queryUtility
 
 from collective.xmpp.core.utils.users import unescapeNode
 
-from jarn.xmpp.twisted.component import XMPPComponent
+from collective.xmpp.core.component import XMPPComponent
 
 from collective.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
 from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable

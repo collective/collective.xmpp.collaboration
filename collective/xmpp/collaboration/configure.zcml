@@ -3,7 +3,7 @@
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
   i18n_domain="collective.xmpp.collaboration">
 
-  <include package="jarn.xmpp.twisted" />
+  <include package="collective.xmpp.core" />
   <include package="collective.xmpp.core" />
   <include package=".adapters" />
   <include package=".browser" />

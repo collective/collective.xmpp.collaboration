@@ -1,19 +1,23 @@
 <configure
   xmlns="http://namespaces.zope.org/zope"
+  xmlns:zcml="http://namespaces.zope.org/zcml"
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
   i18n_domain="collective.xmpp.collaboration">
 
-  <include package="collective.xmpp.core" />
-  <include package="collective.xmpp.core" />
-  <include package=".adapters" />
-  <include package=".browser" />
+    <include package="collective.xmpp.core" />
+    <include package="collective.xmpp.core" />
+    <include package=".adapters" />
+    <include package=".browser" />
 
-  <genericsetup:registerProfile
-    name="default"
-    title="collective.xmpp.collaboration"
-    directory="profiles/default"
-    description="XMPP collaborative editing"
-    provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
+    <genericsetup:registerProfile
+            name="default"
+            title="collective.xmpp.collaboration"
+            directory="profiles/default"
+            description="Collaborative editing via XMPP"
+            provides="Products.GenericSetup.interfaces.EXTENSION"
+            />
 
+    <configure zcml:condition="installed collective.solr">
+        <adapter factory=".adapters.flare.RequestlessPloneFlare" />
+    </configure>
 </configure>

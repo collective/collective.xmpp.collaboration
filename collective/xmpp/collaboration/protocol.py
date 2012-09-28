@@ -175,6 +175,9 @@ class DifferentialSyncronisationHandler(XMPPHandler):
     def _onPatchIQ(self, iq):
         node = iq.patch['node']
         sender = iq['from']
+        if not iq.patch.children:
+            return
+
         diff = iq.patch.children[0]
         patches = self.dmp.patch_fromText(diff)
         shadow = self.shadow_copies[node]

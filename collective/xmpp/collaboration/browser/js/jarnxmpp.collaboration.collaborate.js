@@ -255,6 +255,12 @@ jarnxmpp.ce._setupNode = function (node) {
         editor.onActivate.add(function (ed) {
             jarnxmpp.ce.ownNodeFocused(jarnxmpp.ce.idToNode[editor.id]);
         });
+		editor.onUndo.add(function (ed, l) { 
+            jarnxmpp.ce.nodeBlur(editor.id);
+        });
+		editor.onRedo.add(function (ed, l) { 
+            jarnxmpp.ce.nodeBlur(editor.id);
+        });
     }  else {
         $(jqid).bind('blur keyup paste', function () {
             jarnxmpp.ce.nodeBlur(this.id);

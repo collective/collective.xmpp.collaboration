@@ -85,6 +85,13 @@ class CollaborationHandler(DifferentialSyncronisationHandler):
                     raise DSCException(
                         'Portal with id %s not found' % self.portal_id)
                 setSite(portal)
+                
+                settings = getUtility(IRegistry)
+                autosave = settings.get('collective.xmpp.autoSaveCollaboration', False)
+                if not autosave:
+                    transaction.abort()
+                    return
+
                 acl_users = getToolByName(portal, 'acl_users')
                 user_id = unescapeNode(JID(jid).user)
                 user = acl_users.getUserById(user_id)

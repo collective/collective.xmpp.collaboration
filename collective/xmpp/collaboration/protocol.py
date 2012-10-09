@@ -4,6 +4,7 @@ import logging
 from twisted.words.protocols.jabber.xmlstream import IQ
 from twisted.words.protocols.jabber.xmlstream import toResponse
 from twisted.words.xish.domish import Element
+from twisted.internet.defer import Deferred
 from zope.interface import implements
 from wokkel import disco, iwokkel
 from wokkel.subprotocols import XMPPHandler
@@ -213,19 +214,38 @@ class DifferentialSyncronisationHandler(XMPPHandler):
         response = toResponse(iq, u'result')
         response.addElement((NS_CE, u'success',))
         self.xmlstream.send(response)
-        for receiver in (self.node_participants[node] - set([sender])):
-            self._sendPatchIQ(node, sender, receiver, diff)
-        logger.info('Patch from %s applied on %s' % (sender, node))
+        self._sendPatches(sender, node, diff)
 
-    def _sendPatchIQ(self, node, sender, receiver, patch):
+    def _sendPatches(self, sender, node, diff):
 
-        def success(result, self):
+        def setNodeText(result, self):
+            self.setNodeText(sender, node, self.shadow_copies[node])
+            logger.info('Patch from %s applied on %s' % (sender, node))
+
+        patches_deferred = Deferred()
+        patches_deferred.addCallback(setNodeText, self) 
+
+        def patchSuccess(result, self, receiver):
             self.pending_patches[node].remove(receiver)
-
-        def failure(reason, self):
+            if len(self.pending_patches[node]) == 0:
+                patches_deferred.callback(self)
+                
+        def patchFailure(reason, self, receiver):
             self.pending_patches[node].remove(receiver)
             logger.info("User %s failed on patching node %s" % (sender, node))
 
+        recipients = (self.node_participants[node] - set([sender]))
+        if not recipients:
+            self.setNodeText(sender, node, self.shadow_copies[node])
+        else:
+            for receiver in recipients:
+                d = self._sendPatchIQ(node, sender, receiver, diff)
+                d.addCallback(patchSuccess, self, receiver)
+                d.addErrback(patchFailure, self, receiver)
+
+        return patches_deferred
+
+    def _sendPatchIQ(self, node, sender, receiver, patch):
         iq = IQ(self.xmlstream, 'set')
         iq['to'] = receiver
         patch = iq.addElement((NS_CE, 'patch'), content=patch)
@@ -235,10 +255,7 @@ class DifferentialSyncronisationHandler(XMPPHandler):
             self.pending_patches[node].append(receiver)
         else:
             self.pending_patches[node] = [receiver]
-        d = iq.send()
-        d.addCallback(success, self)
-        d.addErrback(failure, self)
-        return d
+        return iq.send()
 
     def _sendNodeActionToRecipients(self, action, node, sender, recipients):
         if not recipients:

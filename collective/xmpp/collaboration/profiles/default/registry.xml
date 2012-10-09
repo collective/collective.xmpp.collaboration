@@ -22,4 +22,11 @@
     <value>5347</value>
   </record>
 
+  <record name="collective.xmpp.autoSaveCollaboration">
+    <field type="plone.registry.field.Bool">
+      <title>Autosave during collaborative editing</title>
+    </field>
+    <value>False</value>
+  </record>
+
 </registry>

@@ -43,7 +43,7 @@ per sec. Should be possible to do without, but need to investigate as it seems
 that when the server is flooded with iqs it might disconnect the client. */
 
 jarnxmpp.ce.nodeBlur = function (node_id) {
-    if (node_id in jarnxmpp.ce.paused_nodes) return;
+    if (node_id in jarnxmpp.ce.paused_nodes) { return; }
     var now = new Date().getTime(),
         node = jarnxmpp.ce.idToNode[node_id];
     if ((now-jarnxmpp.ce.last_update[node]) < 500.0) {
@@ -74,43 +74,55 @@ jarnxmpp.ce.onApplyPatch = function (event) {
         patches = event.patches,
         user_jid = event.jid,
         node_id = jarnxmpp.ce.nodeToId[node],
-        jqid = jarnxmpp.ce._jqID(node_id);
+        jqid = jarnxmpp.ce._jqID(node_id),
+        selection;
+
     if (jarnxmpp.ce.focused_node === node) {
-        var caret_id = 'caret-' + Math.floor(Math.random()*100000),
-            selection,
-            bookmark_content;
+        var caret1_id = 'caret1-' + Math.floor(Math.random()*100000),
+            caret2_id = 'caret2-' + Math.floor(Math.random()*100000),
+            shadow_content;
+
+
         if (node_id in jarnxmpp.ce.tiny_ids) {
-            var editor = window.tinyMCE.getInstanceById(node_id);
             // If we are inside the node as well we need some special care.
             // First we set a bookmark element. Then apply the patches, then remove the bookmark.
+            var editor = window.tinyMCE.getInstanceById(node_id);
+
+            var caret1_element = editor.dom.createHTML('a', {'id': caret1_id, 'class': 'mceNoEditor'}, ' ');
+            var caret2_element = editor.dom.createHTML('a', {'id': caret2_id, 'class': 'mceNoEditor'}, ' ');
+            var selected_content = editor.selection.getContent();
+
+            editor.selection.setContent(caret1_element + selected_content + caret2_element);
+
             jarnxmpp.ce.paused_nodes[node_id] = '';
-            var caret_element = editor.dom.createHTML('a', {'id': caret_id, 'class': 'mceNoEditor'}, ' ');
-            selection = editor.selection;
-            editor.selection.setContent(caret_element);
-            // Maybe this will do for IE instead of the above? Need to test
-            //editor.execCommand('mceInsertContent', false, caret_element);
-            bookmark_content = jarnxmpp.ce._getContent(node);
-            content = jarnxmpp.ce.dmp.patch_apply(patches, bookmark_content)[0];
-            editor.setContent(content);
+            shadow_content = jarnxmpp.ce._getContent(node);
+            content = jarnxmpp.ce.dmp.patch_apply(patches, shadow_content)[0];
+            editor.setContent(content, {'format':'raw'});
 
             var doc = editor.getDoc();
             var range = doc.createRange();
-            caret_element = doc.getElementById(caret_id);
-            range.selectNode(caret_element);
+            caret1_element = doc.getElementById(caret1_id);
+            caret2_element = doc.getElementById(caret2_id);
+            range.setStart(caret1_element, 0);
+            range.setEnd(caret2_element, 0);
+            editor.dom.remove(caret1_element);
+            editor.dom.remove(caret2_element);
             editor.selection.setRng(range);
-            editor.selection.collapse(0);
+
+            // var bm = editor.selection.getBookmark(0, true);
+            // editor.selection.moveToBookmark(bm);
+
             delete jarnxmpp.ce.paused_nodes[node_id];
-            var bm = editor.selection.getBookmark(0, true);
-            editor.dom.remove(caret_element);
-            editor.selection.moveToBookmark(bm);
+
             editor.focus();
+
         } else {
             selection = $(jqid).getSelection();
             selection.end = selection.start;
-            bookmark_content = $(jqid).val();
-            bookmark_content = bookmark_content.substr(0,selection.start) +
-                caret_id + bookmark_content.substr(selection.start);
-            content = jarnxmpp.ce.dmp.patch_apply(patches, bookmark_content)[0];
+            shadow_content = $(jqid).val();
+            shadow_content = shadow_content.substr(0,selection.start) +
+                caret_id + shadow_content.substr(selection.start);
+            content = jarnxmpp.ce.dmp.patch_apply(patches, shadow_content)[0];
             var new_start = content.search(caret_id);
             content = content.replace(caret_id, '');
             jarnxmpp.ce._setContent(node, content);

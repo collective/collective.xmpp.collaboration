@@ -40,39 +40,32 @@ class CollaborationHandler(DifferentialSyncronisationHandler):
         log.info('User %s left node %s.' % (user, node))
 
     def getNodeText(self, jid, node):
-        transaction.begin()
         app = Zope2.app()
         text = ''
         try:
-            try:
-                portal = app.unrestrictedTraverse(self.portal_id, None)
-                if portal is None:
-                    raise DSCException(
-                        'Portal with id %s not found' % self.portal_id)
-                setSite(portal)
-                acl_users = getToolByName(portal, 'acl_users')
-                user_id = unescapeNode(JID(jid).user)
-                user = acl_users.getUserById(user_id)
-                if user is None:
-                    raise DSCException(
-                        'Invalid user %s' % user_id)
-                newSecurityManager(None, user)
-                ct = getToolByName(portal, 'portal_catalog')
-                uid, html_id = node.split('#')
-                item = ct.unrestrictedSearchResults(UID=uid)
-                if not item:
-                    raise DSCException(
-                        'Content with UID %s not found' % uid)
-                item = ICollaborativelyEditable(item[0].getObject())
-                text = item.getNodeTextFromHtmlID(html_id)
-                transaction.commit()
-            except:
-                transaction.abort()
-                raise
+            portal = app.unrestrictedTraverse(self.portal_id, None)
+            if portal is None:
+                raise DSCException(
+                    'Portal with id %s not found' % self.portal_id)
+            setSite(portal)
+            acl_users = getToolByName(portal, 'acl_users')
+            user_id = unescapeNode(JID(jid).user)
+            user = acl_users.getUserById(user_id)
+            if user is None:
+                raise DSCException(
+                    'Invalid user %s' % user_id)
+            newSecurityManager(None, user)
+            ct = getToolByName(portal, 'portal_catalog')
+            uid, html_id = node.split('#')
+            item = ct.unrestrictedSearchResults(UID=uid)
+            if not item:
+                raise DSCException(
+                    'Content with UID %s not found' % uid)
+            item = ICollaborativelyEditable(item[0].getObject())
+            text = item.getNodeTextFromHtmlID(html_id)
         finally:
             noSecurityManager()
             setSite(None)
-            app._p_jar.close()
         return text
 
     def setNodeText(self, jid, node, text):

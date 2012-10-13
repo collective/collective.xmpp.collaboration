@@ -32,8 +32,9 @@ jarnxmpp.ce._setContent = function (node, content) {
     if (node_id in jarnxmpp.ce.tiny_ids) {
         var editor = window.tinyMCE.getInstanceById(node_id);
         editor.setContent(content);
-    } else
+    } else {
         $(jarnxmpp.ce._jqID(node_id)).val(content);
+    }
 };
 
 
@@ -45,8 +46,8 @@ jarnxmpp.ce.nodeBlur = function (node_id) {
     if (node_id in jarnxmpp.ce.paused_nodes) return;
     var now = new Date().getTime(),
         node = jarnxmpp.ce.idToNode[node_id];
-    if ((now-jarnxmpp.ce.last_update[node]) < 1000.0) {
-        $(this).doTimeout('jarnxmpp.ce.delayedNodeChanged', 1000, function() {
+    if ((now-jarnxmpp.ce.last_update[node]) < 500.0) {
+        $(this).doTimeout('jarnxmpp.ce.delayedNodeChanged', 500, function() {
             now = new Date().getTime();
             jarnxmpp.ce.last_update[node] = now;
             var event = $.Event('jarnxmpp.ce.nodeChanged');
@@ -182,17 +183,26 @@ jarnxmpp.ce.ownNodeFocused = function (node) {
 jarnxmpp.ce.onNodeFocus = function(event) {
     var node_id = jarnxmpp.ce.nodeToId[event.node],
         user_id = Strophe.getNodeFromJid(event.jid),
-        participant_id = 'node-participant-' + jarnxmpp.ce._idFromJID(event.jid);
-    $('#' + participant_id).remove();
+        participant_id = 'node-participant-' + jarnxmpp.ce._idFromJID(event.jid),
+        $participant = $('#' + participant_id),
+        $node_participants = $(jarnxmpp.ce._jqID(node_id + '-participants'));
 
-    if (node_id !=='') {
+    if ($participant.length) {
+        if ($node_participants.has($participant).length) {
+            return;
+        }
+        $participant.appendTo($node_participants);
+    } else if ((node_id !=='') && !($('#' + participant_id).length)) {
         jarnxmpp.Presence.getUserInfo(user_id, function(data) {
-            var participant_element = $('<img/>')
-                .attr('id', participant_id)
-                .attr('title', data.fullname)
-                .attr('src', data.portrait_url)
-                .addClass('node-participant');
-            $(jarnxmpp.ce._jqID(node_id + '-participants')).append(participant_element);
+            $participant = $('#' + participant_id);
+            if (!$participant.length) {
+                $participant = $('<img/>')
+                    .attr('id', participant_id)
+                    .attr('title', data.fullname)
+                    .attr('src', data.portrait_url)
+                    .addClass('node-participant');
+            }
+            $node_participants.append($participant);
         });
     }
 };
@@ -254,6 +264,9 @@ jarnxmpp.ce._setupNode = function (node) {
         });
         editor.onActivate.add(function (ed) {
             jarnxmpp.ce.ownNodeFocused(jarnxmpp.ce.idToNode[editor.id]);
+        });
+		editor.onPaste.add(function (ed, l) { 
+            jarnxmpp.ce.nodeBlur(editor.id);
         });
 		editor.onUndo.add(function (ed, l) { 
             jarnxmpp.ce.nodeBlur(editor.id);

@@ -18,7 +18,7 @@ IQ_SET = '/iq[@type="set"]'
 CE_PRESENCE = "/presence"
 CE_MESSAGE = "/message/x[@xmlns='%s']" % NS_CE
 
-logger = logging.getLogger('collective.xmpp.collaboration')
+log = logging.getLogger('collective.xmpp.collaboration')
 
 
 class DSCException(Exception):
@@ -59,7 +59,7 @@ class DifferentialSyncronisationHandler(XMPPHandler):
         self.xmlstream.addObserver(CE_PRESENCE, self._onPresence)
         self.xmlstream.addObserver(CE_MESSAGE, self._onMessage)
 
-        logger.info('Collaboration component connected.')
+        log.info('Collaboration component connected.')
 
     def _onPresence(self, presence):
         sender = presence['from']
@@ -90,6 +90,8 @@ class DifferentialSyncronisationHandler(XMPPHandler):
         if not node:
             # Ignore, malformed initial presence
             return
+
+        log.info('got presence for node: %s' % node)
 
         try:
             text = self.getNodeText(sender, node)
@@ -188,7 +190,7 @@ class DifferentialSyncronisationHandler(XMPPHandler):
             response = toResponse(iq, u'error')
             response.addElement((NS_CE, u'error'), content='Error applying patch.')
             self.xmlstream.send(response)
-            logger.error('Patch %s could not be applied on node %s' % \
+            log.warn('Patch %s could not be applied on node %s' % \
                          (diff, node))
             return
         if iq.patch.hasAttribute('digest'):
@@ -206,10 +208,10 @@ class DifferentialSyncronisationHandler(XMPPHandler):
                     response = toResponse(iq, u'error')
                     response.addElement((NS_CE, u'error'), content='Digest mismatch.')
                     self.xmlstream.send(response)
-                    logger.error('MD5 digest did not match on node %s' % node)
+                    log.warn('MD5 digest did not match on node %s' % node)
                     return
                 else:
-                    logger.info('MD5 digest did not match. Continue as normal, this is probably due to lag.')
+                    log.info('MD5 digest did not match. Continue as normal, this is probably due to lag.')
         self.shadow_copies[node] = new_text
         response = toResponse(iq, u'result')
         response.addElement((NS_CE, u'success',))
@@ -220,7 +222,7 @@ class DifferentialSyncronisationHandler(XMPPHandler):
 
         def setNodeText(result, self):
             self.setNodeText(sender, node, self.shadow_copies[node])
-            logger.info('Patch from %s applied on %s' % (sender, node))
+            log.info('Patch from %s applied on %s' % (sender, node))
 
         patches_deferred = Deferred()
         patches_deferred.addCallback(setNodeText, self) 
@@ -232,7 +234,7 @@ class DifferentialSyncronisationHandler(XMPPHandler):
                 
         def patchFailure(reason, self, receiver):
             self.pending_patches[node].remove(receiver)
-            logger.info("User %s failed on patching node %s" % (sender, node))
+            log.info("User %s failed on patching node %s" % (sender, node))
 
         recipients = (self.node_participants[node] - set([sender]))
         if not recipients:

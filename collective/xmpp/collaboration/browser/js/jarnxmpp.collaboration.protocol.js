@@ -106,9 +106,10 @@ jarnxmpp.ce.sendPatch = function (event) {
         patch_text,
         digest,
         iq;
-    if (diff.length<2) {
-        return false;
-    }
+    //if (diff.length<2) {
+    //    return false;
+    //}
+    
     jarnxmpp.ce.dmp.diff_cleanupEfficiency(diff);
     patch_list = jarnxmpp.ce.dmp.patch_make(shadow, current, diff);
     patch_text = jarnxmpp.ce.dmp.patch_toText(patch_list);

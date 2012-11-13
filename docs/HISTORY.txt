@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 0.1dev1 (2012-11-13)
 --------------------
 

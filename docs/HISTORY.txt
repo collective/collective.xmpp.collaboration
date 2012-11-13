@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.1 - Unreleased
-------------------
+0.1dev1 (2012-11-13)
+--------------------
 
 - Forked from jarn.xmpp.core 0.1b2 [jcbrand]
 - Add support for email usernames [jcbrand]

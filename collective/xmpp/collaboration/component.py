@@ -7,15 +7,13 @@ from AccessControl.SecurityManagement import noSecurityManager
 from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
 from twisted.words.protocols.jabber.jid import JID
-from zope.app.component.hooks import setSite
+from zope.component.hooks import setSite
 from zope.component import getGlobalSiteManager
 from zope.component import getUtility
 from zope.component import queryUtility
 
 from collective.xmpp.core.utils.users import unescapeNode
-
 from collective.xmpp.core.component import XMPPComponent
-
 from collective.xmpp.collaboration.interfaces import ICollaborativeEditingComponent
 from collective.xmpp.collaboration.interfaces import ICollaborativelyEditable
 from collective.xmpp.collaboration.interfaces import IProductLayer
